@@ -68,3 +68,11 @@ public class CompanyTest {
 ```
 true
 ```
+
+두 인스턴스가 서로 동일함을 확인할 수 있다.
+
+# 출처
+
+[Do it! 자바 프로그래밍 입문](https://www.yes24.com/Product/Goods/62281686)
+
+2024-07-18 16:42:30
