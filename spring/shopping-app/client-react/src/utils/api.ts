@@ -1,6 +1,7 @@
 import axios, { type AxiosResponse } from "axios";
 
 import type { ProductType } from "../types";
+import { API_SERVER_DOMAIN } from "../constants";
 
 type ReturnType<T> = Promise<AxiosResponse<T>>;
 
