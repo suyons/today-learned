@@ -1,1 +1,1 @@
-export const API_SERVER_DOMAIN = "http://localhost/shopping_api";
+export const API_SERVER_DOMAIN = "http://localhost:3090/";
