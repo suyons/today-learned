@@ -3,7 +3,6 @@ package com.packt.cardatabase.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,8 +16,8 @@ import lombok.Setter;
 @Setter
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue
+    private String id;
 
     private String name, explanation, thumbnail;
     private Long price;
@@ -29,7 +28,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String explanation, String thumbnail, Long price, Long discount) {
+    public Product(String id, String name, String explanation, String thumbnail, Long price, Long discount) {
+        this.id = id;
         this.name = name;
         this.explanation = explanation;
         this.thumbnail = thumbnail;
