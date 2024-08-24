@@ -7,6 +7,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class ProductArray {
-    Product[] products;
+public class AccountCredentials {
+    private final String username;
+    private final String password;
 }
