@@ -13,6 +13,13 @@ node.js 기반으로 쓰인 쇼핑몰 예시 코드를 Spring Boot로 전환했�
 - 도서 정보: https://www.yes24.com/Product/Goods/125992344
 - 깃허브: https://github.com/Hong-JunHyeok/shopping_app_example
 
+### 실행 방법
+
+```sh
+cd client
+npm run start
+```
+
 ## [server](/spring/shopping/server/)
 
 다음 도서에서 제공된 예시 코드를 활용하여 백엔드 앱을 node.js에서 Spring Boot로 전환하였습니다.
@@ -23,6 +30,13 @@ node.js 기반으로 쓰인 쇼핑몰 예시 코드를 Spring Boot로 전환했�
 
 - 도서 정보: https://www.yes24.com/Product/Goods/117878070
 - 깃허브: https://github.com/wikibook/springboot-react/tree/main/Chapter05
+
+### 실행 방법
+
+```sh
+cd server
+./mvnw spring-boot:run
+```
 
 # 학습 내용
 
