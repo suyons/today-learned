@@ -5,9 +5,7 @@ import { API_SERVER_DOMAIN } from "../constants";
 
 type ReturnType<T> = Promise<AxiosResponse<T>>;
 
-export const getProducts = async (): ReturnType<{
-  products: ProductType[];
-}> => {
+export const getProducts = async (): ReturnType<ProductType[]> => {
   try {
     const response = await axios.get("/product");
     return response;
@@ -18,7 +16,7 @@ export const getProducts = async (): ReturnType<{
 
 export const getProduct = async (
   id: string
-): ReturnType<{ product: ProductType }> => {
+): ReturnType<ProductType> => {
   try {
     const response = axios.get(`/product/${id}`);
     return response;

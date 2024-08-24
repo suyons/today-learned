@@ -69,7 +69,7 @@ const ProductPage = () => {
   if (!productId || !data) return <NotFoundPage />;
   if (getProductLoading || deleteProductLoading) return <CircularProgress />;
 
-  const product = data.data.product;
+  const product = data.data;
 
   return (
     <>
