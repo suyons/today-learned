@@ -7,22 +7,25 @@ import {
   ProductCreatePage,
   ProductPage,
   PurchasePage,
-  LoginPage
+  LoginPage,
 } from "./pages";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route index element={<HomePage />} />
-        <Route path="create" element={<ProductCreatePage />} />
-        <Route path="cart" element={<CartPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="product/:productId" element={<ProductPage />} />
-        <Route path="purchase/:productId" element={<PurchasePage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Layout>
+    <AuthProvider>
+      <Layout>
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="create" element={<ProductCreatePage />} />
+          <Route path="cart" element={<CartPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="product/:productId" element={<ProductPage />} />
+          <Route path="purchase/:productId" element={<PurchasePage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Layout>
+    </AuthProvider>
   );
 }
 

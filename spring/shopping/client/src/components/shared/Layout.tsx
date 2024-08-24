@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
+import { useAuth } from "../../contexts/AuthContext"
 
 type Props = {
   children: React.ReactNode;
