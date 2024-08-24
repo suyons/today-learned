@@ -8,6 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import com.example.server.model.Product;
+import com.example.server.model.ProductArray;
 import com.google.gson.Gson;
 
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    public Product[] loadProducts() {
+    public ProductArray loadProducts() {
         Gson gson = new Gson();
         ClassPathResource resource = new ClassPathResource("products.json");
         BufferedReader br;
@@ -29,7 +30,7 @@ public class ProductService {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        Product[] products = gson.fromJson(sb.toString(), Product[].class);
+        ProductArray products = gson.fromJson(sb.toString(), ProductArray.class);
         return products;
     }
 }
