@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
-import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext";
 
 type Props = {
   children: React.ReactNode;
@@ -18,11 +18,17 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   const navigate = useNavigate();
+  const { isLoggedIn, logout } = useAuth();
 
   const handlePushHomePage = () => navigate("/");
   const handlePushCartPage = () => navigate("/cart");
   const handlePushLoginPage = () => navigate("/login");
   const handlePushCreatePage = () => navigate("/create");
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -40,9 +46,15 @@ const Layout = ({ children }: Props) => {
               <Button color="inherit" onClick={handlePushCartPage}>
                 장바구니
               </Button>
-              <Button color="inherit" onClick={handlePushLoginPage}>
-                로그인
-              </Button>
+              {isLoggedIn ? (
+                <Button color="inherit" onClick={handleLogout}>
+                  로그아웃
+                </Button>
+              ) : (
+                <Button color="inherit" onClick={handlePushLoginPage}>
+                  로그인
+                </Button>
+              )}
             </div>
           </Toolbar>
         </AppBar>

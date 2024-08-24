@@ -10,7 +10,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-    !!localStorage.getItem("jwt")
+    localStorage.getItem("jwt") !== undefined
   );
 
   const login = () => {
