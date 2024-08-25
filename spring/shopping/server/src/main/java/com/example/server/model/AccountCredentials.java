@@ -1,13 +1,15 @@
 package com.example.server.model;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class AccountCredentials {
-    private final String username;
-    private final String password;
+    private String username;
+    private String password;
 }

@@ -27,7 +27,7 @@ export default function SignIn() {
 
   const handleLogin = async (user: User) => {
     try {
-      const response = await axios.post("/login", { user });
+      const response = await axios.post("/login", { ...user });
 
       const token = response.headers.authorization?.split(" ")[1];
       if (token) {

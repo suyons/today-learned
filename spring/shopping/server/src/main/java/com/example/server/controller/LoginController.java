@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.server.model.AccountCredentials;
 import com.example.server.model.User;
 import com.example.server.service.JwtService;
 
@@ -22,10 +23,10 @@ public class LoginController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<?> getToken(@RequestBody User user) {
+    public ResponseEntity<?> getToken(@RequestBody AccountCredentials credentials) {
         UsernamePasswordAuthenticationToken creds = new UsernamePasswordAuthenticationToken(
-                user.getUsername(),
-                user.getPassword());
+                credentials.getUsername(),
+                credentials.getPassword());
 
         Authentication auth = authenticationManager.authenticate(creds);
 
