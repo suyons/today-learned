@@ -5,3 +5,4 @@ export { default as PurchasePage } from "./PurchasePage";
 export { default as CartPage } from "./CartPage";
 export { default as NotFoundPage } from "./NotFoundPage";
 export { default as LoginPage } from "./LoginPage";
+export { default as JoinPage } from "./JoinPage";

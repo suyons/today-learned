@@ -8,6 +8,7 @@ import {
   ProductPage,
   PurchasePage,
   LoginPage,
+  JoinPage,
 } from "./pages";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="create" element={<ProductCreatePage />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="join" element={<JoinPage />} />
           <Route path="product/:productId" element={<ProductPage />} />
           <Route path="purchase/:productId" element={<PurchasePage />} />
           <Route path="*" element={<NotFoundPage />} />

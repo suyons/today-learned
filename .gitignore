@@ -1,6 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,intellij,maven,gradle,react,eclipse,java,yarn
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,visualstudiocode,intellij,maven,gradle,react,eclipse,java,yarn
-
 ### Eclipse ###
 .metadata
 bin/
@@ -317,4 +314,5 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,intellij,maven,gradle,react,eclipse,java,yarn
+### Personal ###
+html/
