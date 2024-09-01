@@ -9,8 +9,7 @@
 <body>
   <h2>Return Values</h2>
   <?php
-  function multiply($a, $b)
-  {
+  function multiply($a, $b) {
     return $a * $b;
   }
   $product = multiply(4, 5);
@@ -18,8 +17,7 @@
   ?>
   <h2>Default Parameter Values</h2>
   <?php
-  function greet($name = "Guest")
-  {
+  function greet($name = "Guest") {
     echo "Hello, $name!<br>";
   }
   greet();
@@ -28,8 +26,7 @@
   <h2>Variable-Length Argument Lists</h2>
   <?php
   // array_sum() 함수는 기본 제공 API이다.
-  function sum(...$numbers)
-  {
+  function sum(...$numbers) {
     return array_sum($numbers);
   }
   echo sum(1, 2, 3) . "<br>";
@@ -39,8 +36,7 @@
   <?php
   $globalVar = "I am global";
 
-  function showGlobal()
-  {
+  function showGlobal() {
     // 함수 외부에서 선언된 변수에 접근하기 위해 global 써야 한다.
     // 함수 외부에서 선언된 함수는 바로 접근할 수 있다.
     global $globalVar;
@@ -71,8 +67,7 @@
     return $n * $n;
   };
 
-  function applyFunction($func, $value)
-  {
+  function applyFunction($func, $value) {
     return $func($value);
   }
 
@@ -80,8 +75,7 @@
   ?>
   <h2>Recursive Functions</h2>
   <?php
-  function factorial($n)
-  {
+  function factorial($n) {
     if ($n <= 1) {
       return 1;
     } else {
