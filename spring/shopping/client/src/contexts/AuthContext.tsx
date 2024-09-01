@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface AuthContextType {
   isLoggedIn: boolean;
+  isAdmin: boolean;
   login: () => void;
   logout: () => void;
 }
@@ -13,6 +14,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.getItem("jwt") !== undefined
   );
 
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
   const login = () => {
     setIsLoggedIn(true);
   };
@@ -23,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, isAdmin, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

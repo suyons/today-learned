@@ -13,9 +13,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const JoinPage = () => {
-  const [id, setId] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
   const [role, setRole] = useState<string>("user");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -30,8 +31,9 @@ const JoinPage = () => {
       const response = await axios.post(
         "/join",
         {
-          username: id,
+          username,
           password,
+          nickname,
           role,
         },
         {
@@ -41,7 +43,7 @@ const JoinPage = () => {
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         // 회원가입 성공 후 페이지 이동
         navigate("/login"); // 로그인 페이지로 이동
       }
@@ -73,8 +75,8 @@ const JoinPage = () => {
       <TextField
         label="ID"
         variant="outlined"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         fullWidth
       />
 
@@ -93,6 +95,14 @@ const JoinPage = () => {
         type="password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
+        fullWidth
+      />
+
+      <TextField
+        label="Nickname"
+        variant="outlined"
+        value={nickname}
+        onChange={(e) => setNickname(e.target.value)}
         fullWidth
       />
 
