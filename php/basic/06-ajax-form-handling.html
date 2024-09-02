@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax Form Handling</title>
+</head>
+
+<body>
+  <h2>Submit your name</h2>
+  <form id="nameForm">
+    <label for="name">Name</label>
+    <input type="text" name="name" required>
+    <input type="submit" value="Submit">
+  </form>
+  <p id="response"></p>
+  <script>
+    const form = document.getElementById('nameForm');
+    form.addEventListener('submit', () => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      fetch('06-form-process.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('response').innerHTML = data;
+      })
+      .catch(error => {
+        document.getElementById('response').innerHTML = error;
+      })
+    })
+  </script>
+</body>
+
+</html>
