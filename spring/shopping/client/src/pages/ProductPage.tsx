@@ -10,17 +10,20 @@ import {
   DialogContentText,
   DialogTitle,
   Typography,
+  TextField,
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
+import axios from "axios";
 import { useCart } from "../hooks";
-import { deleteProduct, getProduct } from "../utils/api";
+import { deleteProduct, getProduct, createProduct } from "../utils/api";
 import useAsync from "../hooks/useAsync";
 import { NotFoundPage } from ".";
 import { API_SERVER_DOMAIN } from "../constants";
+import ThumbnailUploader from "../components/create/ThumbnailUploader";
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -30,19 +33,22 @@ const ProductPage = () => {
   const { loading: getProductLoading, data } = useAsync(() =>
     getProduct(productId!)
   );
-
   const { request: deleteProductRequest, loading: deleteProductLoading } =
-    useAsync(() => deleteProduct(productId!), {
-      initialRequest: false,
-    });
+    useAsync(() => deleteProduct(productId!), { initialRequest: false });
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-  const handleAddCard = () => {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [explanation, setExplanation] = useState("");
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
+
+  const handleAddCart = () => {
     if (product) {
       addCarts(product.id);
-      setIsModalOpen(true);
+      setIsCartModalOpen(true);
     }
   };
 
@@ -61,9 +67,42 @@ const ProductPage = () => {
   };
 
   const handleDeleteProduct = async () => {
-    setIsDeleteModal(false);
+    setIsDeleteModalOpen(false);
     await deleteProductRequest();
     handlePushHomePage();
+  };
+
+  const handleUpdateProduct = async (event: any) => {
+    event.preventDefault();
+
+    // FormData 객체 생성
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price.toString());
+    formData.append("explanation", explanation);
+
+    if (thumbnail) {
+      formData.append("thumbnail", thumbnail);
+    }
+
+    try {
+      // API 호출
+      const response = await axios.patch(`/product/${productId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 204) {
+        alert("상품이 성공적으로 업데이트되었습니다.");
+        setIsUpdateModalOpen(false);
+      } else {
+        alert("상품 업데이트에 실패했습니다.");
+      }
+    } catch (error) {
+      alert("상품 업데이트 중 오류가 발생했습니다:");
+      console.log(error);
+    }
   };
 
   if (!productId || !data) return <NotFoundPage />;
@@ -97,14 +136,14 @@ const ProductPage = () => {
           <ButtonGroup orientation="horizontal">
             <Button
               variant="text"
-              onClick={() => setIsDeleteModal(true)}
+              onClick={() => setIsDeleteModalOpen(true)}
               color="error"
             >
               <Delete />
             </Button>
             <Button
               variant="text"
-              // onClick={handlePushPurchasePage}
+              onClick={() => setIsUpdateModalOpen(true)}
               color="info"
             >
               <Edit />
@@ -119,7 +158,7 @@ const ProductPage = () => {
         </Typography>
 
         <ButtonGroup orientation="vertical" fullWidth>
-          <Button variant="outlined" onClick={handleAddCard}>
+          <Button variant="outlined" onClick={handleAddCart}>
             장바구니 담기
           </Button>
           <Button variant="contained" onClick={handlePushPurchasePage}>
@@ -129,8 +168,8 @@ const ProductPage = () => {
       </Container>
 
       <Dialog
-        open={isDeleteModal}
-        onClose={() => setIsDeleteModal(false)}
+        open={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
@@ -140,7 +179,7 @@ const ProductPage = () => {
           <DialogContentText>이 작업은 되돌릴 수 없습니다.</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setIsDeleteModal(false)}>아니요</Button>
+          <Button onClick={() => setIsDeleteModalOpen(false)}>아니요</Button>
           <Button autoFocus onClick={handleDeleteProduct}>
             네
           </Button>
@@ -148,8 +187,68 @@ const ProductPage = () => {
       </Dialog>
 
       <Dialog
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        open={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">상품 수정</DialogTitle>
+        <DialogContent>
+          <Container maxWidth="sm">
+            <Typography variant="h4" align="center" gutterBottom>
+              상품 정보
+            </Typography>
+            <form onSubmit={handleUpdateProduct}>
+              <TextField
+                label="상품 이름"
+                fullWidth
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                margin="normal"
+              />
+              <TextField
+                label="가격"
+                type="number"
+                fullWidth
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
+                margin="normal"
+              />
+              <TextField
+                label="상품 설명"
+                fullWidth
+                multiline
+                rows={4}
+                value={explanation}
+                onChange={(e) => setExplanation(e.target.value)}
+                margin="normal"
+              />
+              <ThumbnailUploader
+                value={thumbnail}
+                onChange={(file) => setThumbnail(file)}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                sx={{ marginTop: 6 }}
+              >
+                수정
+              </Button>
+            </form>
+          </Container>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsUpdateModalOpen(false)}>취소</Button>
+          <Button autoFocus onClick={handleUpdateProduct}>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={isCartModalOpen}
+        onClose={() => setIsCartModalOpen(false)}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
@@ -161,7 +260,7 @@ const ProductPage = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setIsModalOpen(false)}>아니요</Button>
+          <Button onClick={() => setIsCartModalOpen(false)}>아니요</Button>
           <Button onClick={handlePushCartPage} autoFocus>
             네
           </Button>

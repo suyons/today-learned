@@ -19,36 +19,17 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
-    public void updateProduct(String id, Product params, MultipartFile thumbnail) {
+    public void updateProduct(String id, String name, Long price, String explanation, MultipartFile thumbnail) {
         Optional<Product> optionalProduct = repository.findById(id);
-
         if (optionalProduct.isEmpty()) {
             System.out.println("일치하는 레코드가 없습니다.");
             return;
         }
-
         Product product = optionalProduct.get();
-
-        if (params.getName() != null) {
-            product.setName(params.getName());
-        }
-
-        if (params.getPrice() != null) {
-            try {
-                product.setPrice(params.getPrice());
-            } catch (NumberFormatException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        if (params.getExplanation() != null) {
-            product.setExplanation(params.getExplanation());
-        }
-
-        if (thumbnail != null && !thumbnail.isEmpty()) {
-            String thumbnailPath = saveThumbnail(thumbnail);
-            product.setThumbnail(thumbnailPath);
-        }
+        product.setName(name);
+        product.setPrice(price);
+        product.setExplanation(explanation);
+        product.setThumbnail(saveThumbnail(thumbnail));
 
         repository.save(product);
     }

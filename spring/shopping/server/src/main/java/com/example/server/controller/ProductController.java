@@ -37,9 +37,10 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateProduct(@PathVariable String id, @RequestParam Product params,
+    public ResponseEntity<Void> updateProduct(@PathVariable String id, @RequestParam String name,
+            @RequestParam Long price, @RequestParam String explanation,
             @RequestParam(required = false) MultipartFile thumbnail) {
-        service.updateProduct(id, params, thumbnail);
+        service.updateProduct(id, name, price, explanation, thumbnail);
         return ResponseEntity.noContent().build();
     }
 }
