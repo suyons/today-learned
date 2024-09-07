@@ -7,13 +7,17 @@ import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue
@@ -24,16 +28,4 @@ public class Product {
 
     @Column(nullable = true)
     private Long discount;
-
-    public Product() {
-    }
-
-    public Product(String id, String name, String explanation, String thumbnail, Long price, Long discount) {
-        this.id = id;
-        this.name = name;
-        this.explanation = explanation;
-        this.thumbnail = thumbnail;
-        this.price = price;
-        this.discount = discount;
-    }
 }

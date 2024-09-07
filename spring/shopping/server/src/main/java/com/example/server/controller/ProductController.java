@@ -2,20 +2,23 @@ package com.example.server.controller;
 
 import java.util.Optional;
 
+import com.example.server.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.server.model.Product;
 import com.example.server.repository.ProductRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    private ProductService service;
 
     @GetMapping("")
     public Iterable<Product> getRoot() {
@@ -27,4 +30,16 @@ public class ProductController {
         return repository.findById(id);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateProduct(@PathVariable String id, @RequestParam Product params,
+            @RequestParam(required = false) MultipartFile thumbnail) {
+        service.updateProduct(id, params, thumbnail);
+        return ResponseEntity.noContent().build();
+    }
 }

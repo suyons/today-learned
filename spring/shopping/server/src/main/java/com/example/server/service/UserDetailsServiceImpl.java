@@ -13,7 +13,7 @@ import com.example.server.model.User;
 import com.example.server.repository.UserRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService  {
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository repository;
 

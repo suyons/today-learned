@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.server.model.AccountCredentials;
-import com.example.server.model.User;
 import com.example.server.service.JwtService;
 
 @RestController
